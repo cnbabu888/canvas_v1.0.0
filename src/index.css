@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Canvas App Global Reset ─────────────────────────────────────────────── */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+  background: #f5f5f5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Full-screen root — must NOT have width or margin constraints */
+#root {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ── CSS Variables ───────────────────────────────────────────────────────── */
+:root {
+  --accent: #4f46e5;
+  --accent-light: #818cf8;
+  --danger: #e11d48;
+  --success: #22c55e;
+  --text: #1a1a2e;
+  --text-muted: #6b7280;
+  --border: #e5e7eb;
+  --bg-toolbar: #f0f0f0;
+  --bg-canvas: #ffffff;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.12);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.16);
+}
+
+/* ── Keyframe: CommandDock slide-in ──────────────────────────────────────── */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0);   }
+}
+
+.animate-slideUp {
+  animation: slideUp 0.3s ease-out;
+}
+
