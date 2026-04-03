@@ -3,7 +3,7 @@ import { useCanvasStore } from '../../core/StateManager';
 
 export const EraserTool = {
   onMouseDown: (
-    pos: Vec2,
+    _pos: Vec2,
     closestAtom: number | null,
     closestBond: number | null
   ) => {

@@ -4,8 +4,8 @@ import { CutBondsCommand } from '../../commands/CutBondsCommand';
 
 export const ScissorTool = {
   onMouseDown: (
-    pos: Vec2,
-    closestAtom: number | null,
+    _pos: Vec2,
+    _closestAtom: number | null,
     closestBond: number | null
   ) => {
     const store = useCanvasStore.getState();

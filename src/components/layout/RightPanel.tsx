@@ -5,7 +5,7 @@ import { DeepChemPanel } from '../widgets/DeepChemPanel';
 import { useCanvasStore } from '../../core/StateManager';
 import { ChemUtils } from '../../chem/ChemUtils';
 import { ChangePropertyCommand } from '../../commands/ChangePropertyCommand';
-import { IupacNamer } from '../../chem/IupacNamer';
+
 import { ValidationEngine } from '../../chem/ValidationEngine';
 
 export const RightPanel: React.FC = () => {
@@ -56,7 +56,7 @@ export const RightPanel: React.FC = () => {
 
     // IUPAC Name
     const iupacName = useMemo(() => {
-        return IupacNamer.generateName(molecule as any);
+        return 'IUPAC naming coming soon';
     }, [molecule, version]);
 
     // Validation Errors

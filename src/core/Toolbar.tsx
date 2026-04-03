@@ -182,7 +182,7 @@ export const Toolbar: React.FC = () => {
 
         {/* Quick actions */}
         <button
-          onClick={() => placeRing(new Vec2(500, 300), 6)}
+          onClick={() => placeRing(new Vec2(500, 300), 6, true)}
           style={{ ...btnInactive, backgroundColor: '#16a34a', color: '#fff', border: '1px solid #15803d' }}
           title="Add benzene ring"
         >

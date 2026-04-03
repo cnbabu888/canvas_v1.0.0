@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { create } from 'zustand';
 import { Vec2D } from '../math/Vec2D';
-import { Molecule } from '../molecular/Molecule';
+import { Molecule } from '../entities/Molecule';
 import { Atom } from '../molecular/Atom';
 import { Bond } from '../molecular/Bond';
 import { CommandManager } from '../commands/CommandManager';

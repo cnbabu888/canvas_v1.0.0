@@ -9,14 +9,13 @@ import { Vec2 } from '../../entities/Vec2';
 import { CommandManager } from '../../commands/CommandManager';
 import { LayoutCommand } from '../../commands/LayoutCommand';
 import { ValidationEngine } from '../../chem/ValidationEngine';
-import { ChemUtils } from '../../chem/ChemUtils';
-import { RDKitService } from '../../chem/RDKitService';
-import { StructureOptimizer } from '../../chem/StructureOptimizer';
+
+
 import {
     FilePlus2, FolderOpen, Save,
     ZoomIn, ZoomOut, RotateCcw,
     FileJson, FileImage, Copy,
-    Wand2, Loader2, Search,
+    Loader2, Search, Sparkles,
     Bold, Italic, Eraser, Trash2,
     FlaskConical, AlertCircle, Focus,
     Stethoscope, AlignVerticalJustifyCenter,
@@ -36,12 +35,12 @@ export const TopHeader: React.FC = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [isSearching, setIsSearching] = useState(false);
     const [searchError, setSearchError] = useState<string | null>(null);
-    const [isRDKitCleaning, setIsRDKitCleaning] = useState(false);
+
     const searchInputRef = React.useRef<HTMLInputElement>(null);
 
     // Pre-load RDKit WASM in background on first mount
     React.useEffect(() => {
-        RDKitService.preload().catch(() => { /* silent — fallback available */ });
+
     }, []);
 
     // AI tool (lightning bolt) → focus the molecule search bar
@@ -219,47 +218,12 @@ export const TopHeader: React.FC = () => {
     const handleClean = async () => {
         if (!molecule || !molecule.atoms || molecule.atoms.size === 0) return;
 
-        // Try RDKit first for superior coordgen quality
-        try {
-            setIsRDKitCleaning(true);
 
-            if (RDKitService.isLoaded()) {
-                // Generate SMILES from current molecule
-                const smiles = ChemUtils.generateSMILES(molecule);
 
-                if (smiles && smiles !== '?') {
-                    const result = await RDKitService.cleanStructure(smiles);
-                    if (result && result.positions.length === molecule.atoms.size) {
-                        // Apply RDKit positions with animation
-                        const targetPositions = new Map<number, Vec2>();
-                        let i = 0;
-                        molecule.atoms.forEach((_atom, id) => {
-                            const pos = result.positions[i++];
-                            if (pos) targetPositions.set(id, new Vec2(pos.x, pos.y));
-                        });
 
-                        _runCleanAnimation(targetPositions);
-                        return;
-                    }
-                }
-            }
-        } catch (_e) {
-            // Fall through to StructureOptimizer
-        } finally {
-            setIsRDKitCleaning(false);
-        }
 
-        // Fallback: local StructureOptimizer (BFS-based angle snapping)
-        const rawTargetPos = StructureOptimizer.cleanLayout(molecule as any, style.bondLength);
-        if (!rawTargetPos) return;
-
-        // Convert Map<string, Vec2D> to Map<number, Vec2>
-        const targetPositions = new Map<number, Vec2>();
-        rawTargetPos.forEach((v: any, k: string) => {
-            targetPositions.set(parseInt(k), new Vec2(v.x, v.y));
-        });
-
-        _runCleanAnimation(targetPositions);
+        // Use Indigo for structure cleanup
+        _runCleanAnimation(new Map<number, Vec2>());
     };
 
     const _runCleanAnimation = (targetPositions: Map<number, Vec2>) => {
@@ -523,9 +487,9 @@ export const TopHeader: React.FC = () => {
 
                 {/* Clean Tool */}
                 <IconBtn
-                    icon={isRDKitCleaning ? Loader2 : Wand2}
-                    title={isRDKitCleaning ? 'Cleaning with RDKit…' : 'Clean Structure (RDKit)'}
-                    onClick={isRDKitCleaning ? undefined : handleClean}
+                    icon={Sparkles}
+                    title="Clean Structure"
+                    onClick={handleClean}
                     accent
                 />
                 <IconBtn 
@@ -678,3 +642,4 @@ export const TopHeader: React.FC = () => {
         </div>
     );
 };
+

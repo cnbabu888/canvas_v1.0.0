@@ -4,7 +4,7 @@ import { useCanvasStore } from '../../core/StateManager';
 export const SelectTool = {
   onMouseDown: (
     e: { detail: number; shiftKey: boolean },
-    pos: Vec2,
+    _pos: Vec2,
     closestAtom: number | null,
     closestBond: number | null,
     startRubberband: () => void
